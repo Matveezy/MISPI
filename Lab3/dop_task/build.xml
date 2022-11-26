@@ -1,0 +1,158 @@
+<?xml version="1.0"?>
+<project name="git-tst">
+    <property name="project.name" value="task"/>
+
+    <macrodef name="git">
+        <attribute name="command"/>
+        <attribute name="dir" default=""/>
+        <element name="args" optional="true"/>
+        <sequential>
+            <echo file="GIT_COMMAND_LOG" message="git @{command} &#xa;"
+                  append="yes"/>
+            <exec executable="/usr/bin/git" dir="@{dir}">
+                <arg value="@{command}"/>
+                <args/>
+            </exec>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="git-init">
+        <attribute name="repository"/>
+        <sequential>
+            <git command="init">
+                <args>
+                    <arg value="@{repository}"/>
+                </args>
+            </git>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="git-add">
+        <attribute name="path"/>
+        <attribute name="target"/>
+        <sequential>
+            <git command="add" dir="@{path}">
+                <args>
+                    <arg value="@{target}"/>
+                </args>
+            </git>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="git-commit">
+        <attribute name="path"/>
+        <attribute name="message"/>
+        <sequential>
+            <git command="commit" dir="@{path}">
+                <args>
+                    <arg value="-m"/>
+                    <arg value="&#34;@{message}&#34;"/>
+                </args>
+            </git>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="git-clone">
+        <attribute name="repository"/>
+        <attribute name="dest"/>
+        <sequential>
+            <git command="clone">
+                <args>
+                    <arg value="@{repository}"/>
+                    <arg value="@{dest}"/>
+                </args>
+            </git>
+            <git command="pull" dir="@{dest}"/>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="git-remote-add">
+        <attribute name="path"/>
+        <attribute name="branch"/>
+        <attribute name="repository"/>
+        <sequential>
+            <echo file="DUMP" message="branch: @{branch} repos: @{repository}"/>
+            <git command="remote" dir="@{path}">
+                <args>
+                    <arg value="add"/>
+                    <arg value="@{branch}"/>
+                    <arg value="@{repository}"/>
+                </args>
+            </git>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="git-push">
+        <attribute name="path"/>
+        <attribute name="branch"/>
+        <attribute name="head"/>
+        <sequential>
+            <git command="push" dir="@{path}">
+                <args>
+                    <arg value="@{branch}"/>
+                    <arg value="@{head}"/>
+                </args>
+            </git>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="git-push-force">
+        <attribute name="path"/>
+        <attribute name="branch"/>
+        <attribute name="head"/>
+        <sequential>
+            <git command="push" dir="@{path}">
+                <args>
+                    <arg value="--force"/>
+                    <arg value="@{branch}"/>
+                    <arg value="@{head}"/>
+                </args>
+            </git>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="git-author-rename">
+        <attribute name="path"/>
+        <sequential>
+            <antcall target="generate_name"/>
+            <loadfile property="author" srcfile="str.txt"/>
+            <git command="config" dir="@{path}">
+                <args>
+                    <arg value="--local"/>
+                    <arg value="user.name"/>
+                    <arg value="&#34;${author}&#34;"/>
+                </args>
+            </git>
+            <git command="config" dir="@{path}">
+                <args>
+                    <arg value="user.email"/>
+                    <arg value="&#34;${author}@itmo.com&#34;"/>
+                </args>
+            </git>
+        </sequential>
+    </macrodef>
+
+
+    <target name="clean">
+        <delete dir="${project.name}"/>
+    </target>
+
+    <target name="generate_name">
+        <exec executable="bash" output="str.txt">
+            <arg line="script.sh"/>
+        </exec>
+    </target>
+
+    <target name="setUp">
+        <!--        <git-init repository="${project.name}"/>-->
+        <mkdir dir="${project.name}"/>
+        <property name="test.repository" value="https://github.com/Matveezy/dop_po_mispi.git"/>
+        <git-clone repository="${test.repository}" dest="${project.name}"/>
+        <git-author-rename path="${project.name}"/>
+        <loadfile property="author" srcfile="str.txt"/>
+        <echo file="${project.name}/${author}.txt" append="true">additional task</echo>
+        <git-add path="${project.name}" target="${author}.txt"/>
+        <git-commit path="${project.name}" message="${author} commit"/>
+        <git-push-force path="${project.name}" branch="origin" head="main"/>
+    </target>
+</project>
