@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"com.example.Web3.beans"},{"l":"com.example.Web3.dao"},{"l":"com.example.Web3.entity"},{"l":"com.example.Web3.services"},{"l":"com.example.Web3.utils"}]

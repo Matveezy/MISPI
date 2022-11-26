@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.10.12
+Created-By: 11.0.13+7-jvmci-21.3-b05 (GraalVM Community)
+Main-Class: lab3
+MD5: 198f6408eada10056abd0727a9e221aa
+
+SHA-1: 14abafd431cfec7febf6aeb77df7e8ed4c6642bd
+
+

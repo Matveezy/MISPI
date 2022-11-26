@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<project name="lab3" default="compile">
+
+
+    <property file="build.properties"/>
+    <path id="classpath">
+        <fileset dir="${lib.dir}" includes="*.jar"/>
+    </path>
+
+    <target name="compile">
+        <mkdir dir="${classes.dir}"/>
+        <javac srcdir="${src.dir}" nowarn="on" destdir="${classes.dir}" classpathref="classpath"
+               includeantruntime="false"/>
+    </target>
+
+    <target name="build" depends="compile">
+        <mkdir dir="${jar.dir}"/>
+        <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}" excludes="**/*Test.class">
+            <manifest>
+                <attribute name="Main-Class" value="${main.class}"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <target name="doc">
+        <mkdir dir="${docs.dir}"/>
+        <javadoc
+                packagenames="com.example.Web3.*"
+                destdir="${docs.dir}/api"
+                sourcepath="src/main/java"
+                classpathref="classpath">
+            <group title="Bean Package" packages="com.example.Web3.beans/*"/>
+            <group title="Dao Package" packages="com.example.Web3.dao/*"/>
+            <group title="Entity Package" packages="com.example.Web3.entity/*"/>
+            <group title="Service Package" packages="com.example.Web3.services/*"/>
+            <group title="Util Package" packages="com.example.Web3.utils/*"/>
+        </javadoc>
+
+        <checksum file="${jar.dir}/${main.class}.jar" algorithm="MD5" fileext="md5"/>
+        <checksum file="${jar.dir}/${main.class}.jar" algorithm="SHA-1" fileext="sha1"/>
+
+        <loadfile property="md5" srcfile="${md5.file}"/>
+        <loadfile property="sha1" srcfile="${sha1.file}"/>
+        <jar update="true" destfile="${jar.dir}/${ant.project.name}.jar">
+            <manifest>
+                <attribute name="MD5" value="${md5}"/>
+                <attribute name="SHA-1" value="${sha1}"/>
+            </manifest>
+            <fileset dir="${docs.dir}"/>
+        </jar>
+        <delete file="${md5.file}"/>
+        <delete file="${sha1.file}"/>
+        <delete dir="${docs.dir}"/>
+    </target>
+
+    <target name="test" depends="build">
+        <junit printsummary="yes">
+            <formatter type="brief" usefile="false"/>
+            <classpath>
+                <pathelement location="${classes.dir}"/>
+            </classpath>
+            <test name="com.example.Web3.utils.HitCheckerTest"/>
+            <test name="com.example.Web3.utils.ValidatorTest"/>
+        </junit>
+    </target>
+
+    <scriptdef name="propertyreset" language="javascript">
+        <attribute name="name"/>
+        <attribute name="value"/>
+        project.setProperty(attributes.get("name"), attributes.get("value"));
+    </scriptdef>
+
+    <target name="alt">
+        <copy todir="${src_new.dir}">
+            <fileset dir="${src.dir}"/>
+        </copy>
+        <property name="src_old_path.dir" value="${src.dir}"/>
+        <propertyreset name="src.dir" value="${src_new.dir}"/>
+
+        <replace dir="${src.dir}/${project.structure}/beans" token="Result" value="Сonsequence"/>
+        <replace dir="${src.dir}/${project.structure}/beans" token="result" value="consequence"/>
+        <replace dir="${src.dir}/${project.structure}/entity" token="Result" value="Сonsequence"/>
+        <replace dir="${src.dir}/${project.structure}/entity" token="result" value="consequence"/>
+        <replace dir="${src.dir}/${project.structure}/services" token="Result" value="Сonsequence"/>
+        <replace dir="${src.dir}/${project.structure}/services" token="result" value="consequence"/>
+        <replace dir="${src.dir}/${project.structure}/dao" token="Result" value="Сonsequence"/>
+        <replace dir="${src.dir}/${project.structure}/dao" token="result" value="consequence"/>
+        <replace dir="${src.dir}/${project.structure}/utils" token="Result" value="Сonsequence"/>
+        <replace dir="${src.dir}/${project.structure}/utils" token="result" value="consequence"/>
+        <replace dir="${src.dir}/main/test/java/com/example/Web3/utils" token="Result" value="Сonsequence"/>
+        <replace dir="${src.dir}/main/test/java/com/example/Web3/utils" token="result" value="consequence"/>
+        <move file="${src.dir}/${project.structure}/beans/ResultBean.java"
+              tofile="${src.dir}/${project.structure}/beans/СonsequenceBean.java"/>
+        <move file="${src.dir}/${project.structure}/entity/Result.java"
+              tofile="${src.dir}/${project.structure}/entity/Сonsequence.java"/>
+        <move file="${src.dir}/${project.structure}/services/ResultService.java"
+              tofile="${src.dir}/${project.structure}/services/СonsequenceService.java"/>
+        <move file="${src.dir}/${project.structure}/dao/ResultDao.java"
+              tofile="${src.dir}/${project.structure}/services/СonsequenceDao.java"/>
+        <delete dir="${classes.dir}"/>
+        <antcall target="build"/>
+        <delete dir="${src_new.dir}"/>
+        <propertyreset name="src.dir" value="${src_old_path.dir}"/>
+    </target>
+
+</project>
