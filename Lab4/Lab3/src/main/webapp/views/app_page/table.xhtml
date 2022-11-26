@@ -1,0 +1,44 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core">
+
+    <div>
+        <h:commandButton id="update" styleClass="update" value="Update data" action="#{resultBean.update}">
+            <f:ajax render="@all"/>
+        </h:commandButton>
+        <h:commandButton id="clean" styleClass="clean" value="Clean table" action="#{resultBean.deleteList}">
+            <f:ajax render="results graph"/>
+        </h:commandButton>
+        <h:panelGroup id="results">
+            <h:outputText styleClass="caption" value="Results:"/>
+            <h:dataTable styleClass="results" value="#{resultBean.getResults()}" var="elem">
+                <h:column>
+                    <f:facet name="header">X</f:facet>
+                    <h:outputText value="${elem.x}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Y</f:facet>
+                    <h:outputText value="${elem.y}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">R</f:facet>
+                    <h:outputText value="${elem.r}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Current Time</f:facet>
+                    <h:outputText value="${elem.currentTime}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Execution Time</f:facet>
+                    <h:outputText value="${elem.executionTime} ms"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Hit</f:facet>
+                    <h:outputText value="${elem.result}" styleClass="#{(elem.result) ? 'true' : 'false'}"/>
+                </h:column>
+            </h:dataTable>
+        </h:panelGroup>
+    </div>
+</ui:composition>

@@ -1,0 +1,147 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:h="http://java.sun.com/jsf/html">
+
+    <h:panelGroup id="graph">
+        <svg xmlns="http://www.w3.org/2000/svg" id="picture" onclick="checkHit()">
+
+            <!-- Оси координат -->
+            <line stroke="black" x1="0" y1="175" x2="350" y2="175"/>
+            <line stroke="black" x1="175" y1="0" x2="175" y2="350"/>
+
+            <!-- Стрелки к осям -->
+            <polygon points="175,${- resultBean.pointer5 * 20}
+             170,${10 - resultBean.pointer5 * 20}
+             180,${10 - resultBean.pointer5 * 20}" stroke="black"/>
+            <polygon points="${350 + resultBean.pointer5 * 20},175 ${335 + resultBean.pointer5 * 20},170
+            ${335 + resultBean.pointer5 * 20},180" stroke="black"/>
+
+            <!-- Значения на осях -->
+            <text x="${335 + resultBean.pointer5 * 20}" y="165" font-size="25">x</text>
+            <text x="185" y="${15 - resultBean.pointer5 * 20}" font-size="25">y</text>
+
+            <!-- Метки на оси X -->
+            <line stroke="black" x1="${175 - resultBean.newResult.r / 4.0 * 675}" y1="170"
+                  x2="${175 - resultBean.newResult.r / 4.0 * 675}" y2="180"/>
+            <line stroke="black" x1="${175 - resultBean.newResult.r / 4.0 * 607.5}" y1="170"
+                  x2="${175 - resultBean.newResult.r / 4.0 * 607.5}" y2="180"/>
+            <line stroke="black" x1="${175 - resultBean.newResult.r / 4.0 * 540}" y1="170"
+                  x2="${175 - resultBean.newResult.r / 4.0 * 540}" y2="180"/>
+            <line stroke="black" x1="${175 - resultBean.newResult.r / 4.0 * 472.5}" y1="170"
+                  x2="${175 - resultBean.newResult.r / 4.0 * 472.5}" y2="180"/>
+            <line stroke="black" x1="${175 - resultBean.newResult.r / 4.0 * 405}" y1="170"
+                  x2="${175 - resultBean.newResult.r / 4.0 * 405}" y2="180"/>
+            <line stroke="black" x1="${175 - resultBean.newResult.r / 4.0 * 337.5}" y1="170"
+                  x2="${175 - resultBean.newResult.r / 4.0 * 337.5}" y2="180"/>
+            <line stroke="black" x1="${175 - resultBean.newResult.r / 4.0 * 270}" y1="170"
+                  x2="${175 - resultBean.newResult.r / 4.0 * 270}" y2="180"/>
+            <line stroke="black" x1="${175 - resultBean.newResult.r / 4.0 * 202.5}" y1="170"
+                  x2="${175 - resultBean.newResult.r / 4.0 * 202.5}" y2="180"/>
+            <line stroke="black" x1="${175 - resultBean.newResult.r / 4.0 * 135}" y1="170"
+                  x2="${175 - resultBean.newResult.r / 4.0 * 135}" y2="180"/>
+            <line stroke="black" x1="${175 - resultBean.newResult.r / 4.0 * 67.5}" y1="170"
+                  x2="${175 - resultBean.newResult.r / 4.0 * 67.5}" y2="180"/>
+            <line stroke="black" x1="${175 + resultBean.newResult.r / 4.0 * 67.5}" y1="170"
+                  x2="${175 + resultBean.newResult.r / 4.0 * 67.5}" y2="180"/>
+            <line stroke="black" x1="${175 + resultBean.newResult.r / 4.0 * 135}" y1="170"
+                  x2="${175 + resultBean.newResult.r / 4.0 * 135}" y2="180"/>
+            <line stroke="black" x1="${175 + resultBean.newResult.r / 4.0 * 202.5}" y1="170"
+                  x2="${175 + resultBean.newResult.r / 4.0 * 202.5}" y2="180"/>
+            <line stroke="black" x1="${175 + resultBean.newResult.r / 4.0 * 270}" y1="170"
+                  x2="${175 + resultBean.newResult.r / 4.0 * 270}" y2="180"/>
+            <line stroke="black" x1="${(175 + resultBean.newResult.r / 4.0 * 337.5) * resultBean.pointer2 + (175 - resultBean.pointer2 * 175)}"
+                  y1="170" x2="${(175 + resultBean.newResult.r / 4.0 * 337.5) * resultBean.pointer2 + (175 - resultBean.pointer2 * 175)}" y2="180"/>
+            <line stroke="black" x1="${175 + resultBean.newResult.r / 4.0 * 405}" y1="170"
+                  x2="${175 + resultBean.newResult.r / 4.0 * 405}" y2="180"/>
+            <line stroke="black" x1="${175 + resultBean.newResult.r / 4.0 * 472.5}" y1="170"
+                  x2="${175 + resultBean.newResult.r / 4.0 * 472.5}" y2="180"/>
+            <line stroke="black" x1="${175 + resultBean.newResult.r / 4.0 * 540}" y1="170"
+                  x2="${175 + resultBean.newResult.r / 4.0 * 540}" y2="180"/>
+            <line stroke="black" x1="${175 + resultBean.newResult.r / 4.0 * 607.5}" y1="170"
+                  x2="${175 + resultBean.newResult.r / 4.0 * 607.5}" y2="180"/>
+
+
+            <!-- Метки на оси Y -->
+            <line stroke="black" x1="170" y1="${175 - resultBean.newResult.r / 4.0 * 607.5}"
+                  x2="180" y2="${175 - resultBean.newResult.r / 4.0 * 607.5}"/>
+            <line stroke="black" x1="170" y1="${175 - resultBean.newResult.r / 4.0 * 540}"
+                  x2="180" y2="${175 - resultBean.newResult.r / 4.0 * 540}"/>
+            <line stroke="black" x1="170" y1="${175 - resultBean.newResult.r / 4.0 * 472.5}"
+                  x2="180" y2="${175 - resultBean.newResult.r / 4.0 * 472.5}"/>
+            <line stroke="black" x1="170" y1="${175 - resultBean.newResult.r / 4.0 * 405}"
+                  x2="180" y2="${175 - resultBean.newResult.r / 4.0 * 405}"/>
+            <line stroke="black" x1="170" y1="${(175 - resultBean.newResult.r / 4.0 * 337.5) * resultBean.pointer2 + (175 - resultBean.pointer2 * 175)}"
+                  x2="180" y2="${(175 - resultBean.newResult.r / 4.0 * 337.5) * resultBean.pointer2 + (175 - resultBean.pointer2 * 175)}"/>
+            <line stroke="black" x1="170" y1="${175 - resultBean.newResult.r / 4.0 * 270}"
+                  x2="180" y2="${175 - resultBean.newResult.r / 4.0 * 270}"/>
+            <line stroke="black" x1="170" y1="${175 - resultBean.newResult.r / 4.0 * 202.5}"
+                  x2="180" y2="${175 - resultBean.newResult.r / 4.0 * 202.5}"/>
+            <line stroke="black" x1="170" y1="${175 - resultBean.newResult.r / 4.0 * 135}"
+                  x2="180" y2="${175 - resultBean.newResult.r / 4.0 * 135}"/>
+            <line stroke="black" x1="170" y1="${175 - resultBean.newResult.r / 4.0 * 67.5}"
+                  x2="180" y2="${175 - resultBean.newResult.r / 4.0 * 67.5}"/>
+            <line stroke="black" x1="170" y1="${175 + resultBean.newResult.r / 4.0 * 67.5}"
+                  x2="180" y2="${175 + resultBean.newResult.r / 4.0 * 67.5}"/>
+            <line stroke="black" x1="170" y1="${175 + resultBean.newResult.r / 4.0 * 135}"
+                  x2="180" y2="${175 + resultBean.newResult.r / 4.0 * 135}"/>
+            <line stroke="black" x1="170" y1="${175 + resultBean.newResult.r / 4.0 * 202.5}"
+                  x2="180" y2="${175 + resultBean.newResult.r / 4.0 * 202.5}"/>
+            <line stroke="black" x1="170" y1="${175 + resultBean.newResult.r / 4.0 * 270}"
+                  x2="180" y2="${175 + resultBean.newResult.r / 4.0 * 270}"/>
+            <line stroke="black" x1="170" y1="${175 + resultBean.newResult.r / 4.0 * 337.5}"
+                  x2="180" y2="${175 + resultBean.newResult.r / 4.0 * 337.5}"/>
+            <line stroke="black" x1="170" y1="${175 + resultBean.newResult.r / 4.0 * 405}"
+                  x2="180" y2="${175 + resultBean.newResult.r / 4.0 * 405}"/>
+            <line stroke="black" x1="170" y1="${175 + resultBean.newResult.r / 4.0 * 472.5}"
+                  x2="180" y2="${175 + resultBean.newResult.r / 4.0 * 472.5}"/>
+            <line stroke="black" x1="170" y1="${175 + resultBean.newResult.r / 4.0 * 540}"
+                  x2="180" y2="${175 + resultBean.newResult.r / 4.0 * 540}"/>
+            <line stroke="black" x1="170" y1="${175 + resultBean.newResult.r / 4.0 * 607.5}"
+                  x2="180" y2="${175 + resultBean.newResult.r / 4.0 * 607.5}"/>
+            <line stroke="black" x1="170" y1="${175 + resultBean.newResult.r / 4.0 * 675}"
+                  x2="180" y2="${175 + resultBean.newResult.r / 4.0 * 675}"/>
+
+            <!-- Подписи к меткам на оси X -->
+            <text x="${175 - resultBean.newResult.r / 4.0 * 145}" y="${160 + (6 - resultBean.newResult.r) * 1.8}"
+                  font-size="${resultBean.newResult.r * 5}">-R</text>
+            <text x="${175 - resultBean.newResult.r / 4.0 * 80}" y="${160 + (6 - resultBean.newResult.r) * 1.8}"
+                  font-size="${resultBean.newResult.r * 5}">-R/2</text>
+            <text x="${175 + resultBean.newResult.r / 4.0 * 55}" y="${160 + (6 - resultBean.newResult.r) * 1.8}"
+                  font-size="${resultBean.newResult.r * 5}">R/2</text>
+            <text x="${175 + resultBean.newResult.r / 4.0 * 130}" y="${160 + (6 - resultBean.newResult.r) * 1.8}"
+                  font-size="${resultBean.newResult.r * 5}">R</text>
+
+            <!-- Подписи к меткам на оси Y -->
+            <text x="${185 - (6 - resultBean.newResult.r) * 0.8}" y="${175 - resultBean.newResult.r / 4.0 * 130}"
+                  font-size="${resultBean.newResult.r * 5}">R</text>
+            <text x="${185 - (6 - resultBean.newResult.r) * 0.8}" y="${175 - resultBean.newResult.r / 4.0 * 60}"
+                  font-size="${resultBean.newResult.r * 5}">R/2</text>
+            <text x="${185 - (6 - resultBean.newResult.r) * 0.8}" y="${175 + resultBean.newResult.r / 4.0 * 70}"
+                  font-size="${resultBean.newResult.r * 5}">-R/2</text>
+            <text x="${185 - (6 - resultBean.newResult.r) * 0.8}" y="${175 + resultBean.newResult.r / 4.0 * 140}"
+                  font-size="${resultBean.newResult.r * 5}">-R</text>
+
+            <!-- 1-я четверть -->
+            <polygon points="175,${175 - resultBean.newResult.r * 16.875} 175,175
+            ${resultBean.newResult.r * 33.75 + 175},175" fill="blue" fill-opacity="0.4"/>
+
+            <!-- 2-я четверть -->
+            <polygon points="${175 - resultBean.newResult.r * 33.75},175 175,175
+             175,${175 - resultBean.newResult.r * 16.875}
+             ${175 - resultBean.newResult.r * 33.75},${175 - resultBean.newResult.r * 16.875}"
+                     fill="blue" fill-opacity="0.4"/>
+            <!-- 3-я четверть -->
+            <path fill="blue" fill-opacity="0.4"
+                  d="M${175 - resultBean.newResult.r * 16.875} 175 A
+                  ${resultBean.newResult.r * 15} ${resultBean.newResult.r * 15}, 0, 0, 0, 175
+                  ${175 + resultBean.newResult.r * 16.875} L 175 175 Z"/>
+            <ui:repeat value="${resultBean.getResults()}" id="point" var="point">
+                <circle cx="${175 + point.x / 4.0 * 135}"
+                        cy="${175 - point.y / 4.0 * 135}"
+                        r="${((1.5 + point.r / 2.0) * resultBean.isPointer)}"
+                        fill='${point.result ? "green" : "red"}'/>
+            </ui:repeat>
+        </svg>
+    </h:panelGroup>
+</ui:composition>
